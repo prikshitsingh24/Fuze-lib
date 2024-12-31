@@ -1,0 +1,27 @@
+// declarations.d.ts
+
+declare module "*.png" {
+  const value: string;  // value will be the path to the PNG file
+  export default value;
+}
+
+declare module "*.jpg" {
+  const value: string;  // value will be the path to the JPG file
+  export default value;
+}
+
+declare module "*.jpeg" {
+  const value: string;
+  export default value;
+}
+
+declare module "*.gif" {
+  const value: string;
+  export default value;
+}
+
+
+declare module "*.svg" {
+  const value: string;
+  export default value;
+}

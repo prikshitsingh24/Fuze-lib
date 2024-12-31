@@ -25,6 +25,18 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
+      {
+        test: /\.(png|jpe?g|svg)$/,
+        use: [
+          {
+            loader: 'url-loader', // or url-loader if you want to inline the images
+            options: {
+              name: '[name].[hash].[ext]', // This ensures unique names
+              outputPath: 'assets/', // Place images in the assets folder in the dist
+            },
+          },
+        ],
+      },
     ],
   },
   externals: {
