@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "target": "ES5",
+      "module": "ESNext",
+      "moduleResolution": "node",
+      "strict": true,
+      "jsx": "react",
+      "declaration": true,  // This will generate type declaration files
+      "declarationDir": "./dist/types",  // Output location for type declaration files
+      "outDir": "./dist",  // Output location for compiled JS files
+      "esModuleInterop": true
+    },
+    "include": [
+      "src/**/*"
+    ]
+  }
+  
