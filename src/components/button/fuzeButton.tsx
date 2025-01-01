@@ -1,36 +1,50 @@
 import React from 'react';
 import loaderIcon from './assets/loader.svg';
 
-type Color = "red" | "blue" | "green" | "yellow";
+type Color = "red" | "blue" | "green" | "yellow" | "black" | "white";
 
 interface ButtonProps {
   label: string;
   onClick: () => void;
   className?: string; 
   color?: Color;
-  radius: "small" | "medium" | "large" | "extra-large";
+  textColor?: Color;
+  radius: "small" | "medium" | "large" | "extra-large" | "round";
   size?: "small" | "medium" | "large" | "extra-large";
   border?: "solid" | "dashed" | "dotted" | "none";
-  borderColor?:"red" | "blue" | "green" | "yellow";
+  borderColor?: Color;
   borderWidth?: "1" | "2" | "4" | "8";
   mixColor?: { color1: Color; color2: Color };  
-  isLoading?:false;
+  isLoading?: false;
+  shadow?: "small" | "medium" | "large" | "extra-large";
+  animate?: false;
 }
 
-const FuzeButton: React.FC<ButtonProps> = ({ label, onClick, className, color, radius, size, border, borderColor, borderWidth, mixColor, isLoading }) => {
+const FuzeButton: React.FC<ButtonProps> = ({ label, onClick, className, color, textColor, radius, size, border, borderColor, borderWidth, mixColor, isLoading, shadow, animate }) => {
   return (
     <button
       onClick={onClick}
       className={`
-      text-white
       ${color?
+        color=='black'?'bg-black':
+        color=='white'?'bg-white':
         color=='red'? 'bg-red-500':
         color=='blue'? 'bg-blue-500':
         color=='green'? 'bg-green-500':
         'bg-yellow-500':
         ''
       } 
+      ${textColor?
+        textColor=='black'?'text-black':
+        textColor=='white'?'text-white':
+        textColor=='red'? 'text-red-500':
+        textColor=='blue'? 'text-blue-500':
+        textColor=='green'? 'text-green-500':
+        'text-yellow-500':
+        ''
+      } 
       ${radius?
+        radius=="round"?'rounded-full':
         radius=='small'? 'rounded-sm':
         radius=='medium'? 'rounded-md'
         :radius=='large'? 'rounded-lg':
@@ -42,7 +56,7 @@ const FuzeButton: React.FC<ButtonProps> = ({ label, onClick, className, color, r
         size === 'medium' ? 'w-32 h-10 text-base' :
         size === 'large' ? 'w-48 h-12 text-lg' :
         'w-72 h-14 text-xl' :
-        ''
+        'w-fit'
       }
       ${border?
       border === 'solid' ? 'border-solid' :
@@ -52,6 +66,8 @@ const FuzeButton: React.FC<ButtonProps> = ({ label, onClick, className, color, r
       ''
       }
       ${borderColor?
+        borderColor=='white'?'border-white':
+        borderColor=='black'?'border-black':
         borderColor=='red'? 'border-red-500':
         borderColor=='blue'? 'border-blue-500':
         borderColor=='green'? 'border-green-500':
@@ -72,15 +88,38 @@ const FuzeButton: React.FC<ButtonProps> = ({ label, onClick, className, color, r
           mixColor.color1 === 'blue' && mixColor.color2 === 'green' ? 'bg-gradient-to-r from-blue-500 to-green-500' :
           mixColor.color1 === 'blue' && mixColor.color2 === 'yellow' ? 'bg-gradient-to-r from-blue-500 to-yellow-500' :
           mixColor.color1 === 'green' && mixColor.color2 === 'yellow' ? 'bg-gradient-to-r from-green-500 to-yellow-500' :
-          // Add reverse combinations to cover both directions of gradients
           mixColor.color1 === 'blue' && mixColor.color2 === 'red' ? 'bg-gradient-to-r from-blue-500 to-red-500' :
           mixColor.color1 === 'green' && mixColor.color2 === 'red' ? 'bg-gradient-to-r from-green-500 to-red-500' :
           mixColor.color1 === 'yellow' && mixColor.color2 === 'red' ? 'bg-gradient-to-r from-yellow-500 to-red-500' :
           mixColor.color1 === 'green' && mixColor.color2 === 'blue' ? 'bg-gradient-to-r from-green-500 to-blue-500' :
           mixColor.color1 === 'yellow' && mixColor.color2 === 'blue' ? 'bg-gradient-to-r from-yellow-500 to-blue-500' :
           mixColor.color1 === 'yellow' && mixColor.color2 === 'green' ? 'bg-gradient-to-r from-yellow-500 to-green-500' :
+          mixColor.color1 === 'white' && mixColor.color2 === 'red' ? 'bg-gradient-to-r from-white to-red-500' :
+          mixColor.color1 === 'white' && mixColor.color2 === 'blue' ? 'bg-gradient-to-r from-white to-blue-500' :
+          mixColor.color1 === 'white' && mixColor.color2 === 'green' ? 'bg-gradient-to-r from-white to-green-500' :
+          mixColor.color1 === 'white' && mixColor.color2 === 'yellow' ? 'bg-gradient-to-r from-white to-yellow-500' :
+          mixColor.color1 === 'black' && mixColor.color2 === 'red' ? 'bg-gradient-to-r from-black to-red-500' :
+          mixColor.color1 === 'black' && mixColor.color2 === 'blue' ? 'bg-gradient-to-r from-black to-blue-500' :
+          mixColor.color1 === 'black' && mixColor.color2 === 'green' ? 'bg-gradient-to-r from-black to-green-500' :
+          mixColor.color1 === 'black' && mixColor.color2 === 'yellow' ? 'bg-gradient-to-r from-black to-yellow-500' :
+          mixColor.color1 === 'red' && mixColor.color2 === 'white' ? 'bg-gradient-to-r from-red-500 to-white' :
+          mixColor.color1 === 'blue' && mixColor.color2 === 'white' ? 'bg-gradient-to-r from-blue-500 to-white' :
+          mixColor.color1 === 'green' && mixColor.color2 === 'white' ? 'bg-gradient-to-r from-green-500 to-white' :
+          mixColor.color1 === 'yellow' && mixColor.color2 === 'white' ? 'bg-gradient-to-r from-yellow-500 to-white' :
+          mixColor.color1 === 'red' && mixColor.color2 === 'black' ? 'bg-gradient-to-r from-red-500 to-black' :
+          mixColor.color1 === 'blue' && mixColor.color2 === 'black' ? 'bg-gradient-to-r from-blue-500 to-black' :
+          mixColor.color1 === 'green' && mixColor.color2 === 'black' ? 'bg-gradient-to-r from-green-500 to-black' :
+          mixColor.color1 === 'yellow' && mixColor.color2 === 'black' ? 'bg-gradient-to-r from-yellow-500 to-black' :           
           '' : ''
         }
+        ${shadow?
+          shadow==="small"?'shadow-sm':
+          shadow==="medium"?'shadow-md':
+          shadow==="large"?'shadow-lg':
+          'shadow-xl':
+          ''
+        }
+        ${animate?'transition-transform duration-200 ease-in-out active:scale-95':''}
       ${className}`
     }
     >
@@ -88,7 +127,7 @@ const FuzeButton: React.FC<ButtonProps> = ({ label, onClick, className, color, r
           <div className={`absolute left-0 ${size=='small'?'ml-2':'ml-3'}`}>
             {isLoading && (<img src={loaderIcon} width={size=='small'?16:20}/>)}
           </div>
-          <div className={`w-full text-center ${size?'pl-2':''} `}>{label}</div>
+          <div className={`w-full text-center ${isLoading?'pl-2':''} `}>{label}</div>
         </div>
     
     </button>
